@@ -149,3 +149,6 @@ describe('<PokemonPage />', () => {
     expect(screen.queryByText('Next')).toBeNull();
   });
 });
+
+// figure out why this is failing
+// upto 11.8
