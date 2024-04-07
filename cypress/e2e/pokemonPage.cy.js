@@ -1,6 +1,6 @@
 describe('Pokedex', function () {
   it('front page can be opened', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('http://localhost:5001');
     cy.contains('ivysaur').click();
     cy.contains('overgrow');
     cy.contains(
