@@ -13,6 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Install dependencies
         run: npm install
       - name: Check style
@@ -27,3 +28,7 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: 'http://localhost:5001'
+      - name: Deploy Tests
+        run: fly deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
