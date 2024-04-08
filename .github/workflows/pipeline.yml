@@ -28,7 +28,7 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: 'http://localhost:5001'
-      - name: Deploy Tests
-        run: fly deploy
+      - name: Deploy App
+        run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
