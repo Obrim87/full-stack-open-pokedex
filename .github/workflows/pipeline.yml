@@ -1,4 +1,4 @@
-name: Deployment pipline
+name: Deployment pipeline
 
 on:
   push:
@@ -11,38 +11,47 @@ on:
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-20.04
+
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
       - uses: superfly/flyctl-actions/setup-flyctl@master
+
       - name: Install dependencies
         run: npm install
+
       - name: Check style
         run: npm run eslint
+
       - name: Build
         run: npm run build
+
       - name: Test
         run: npm run test
+
       - name: e2e Tests
         uses: cypress-io/github-action@v5
         with:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: 'http://localhost:5001'
+
       - name: Deploy App
         if: ${{ github.event_name == 'push' }}
         run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
   tag_release:
     if: ${{ github.event_name == 'push' }}
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
+
     steps:
+      - uses: actions/checkout@v4
+
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.67.0
         env:
