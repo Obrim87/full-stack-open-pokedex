@@ -46,7 +46,7 @@ jobs:
 
       - name: Discord Success
         uses: rjstone/discord-webhook-notify@v1
-        if: success()
+        if: success() && github.event_name == 'push'
         with:
           severity: info
           details: Test Succeeded!
@@ -54,19 +54,11 @@ jobs:
 
       - name: Discord Failure
         uses: rjstone/discord-webhook-notify@v1
-        if: failure()
+        if: failure() && github.event_name == 'push'
         with:
           severity: error
           details: Test Failed!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-      # - name: Discord Cancelled
-      #   uses: rjstone/discord-webhook-notify@v1
-      #   if: cancelled()
-      #   with:
-      #     severity: warn
-      #     details: Test Cancelled!
-      #     webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
     if: ${{ github.event_name == 'push' && contains(join(toJson(github.event.commits.*.message), ' '), '#skip') == false }}
