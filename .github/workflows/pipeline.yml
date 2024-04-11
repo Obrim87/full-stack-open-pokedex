@@ -74,6 +74,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
           WITH_V: true
-
-          # this is failing now for some reason at Run superfly/flyctl-actions/setup-flyctl@master
-          # will disable discord webhook to stop spamming it
