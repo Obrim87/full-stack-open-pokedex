@@ -1,12 +1,15 @@
 name: Check URL
 
 on:
-  # push is just for testing
-  # push:
-  #   branches:
-  #     - main
-  schedule:
-    - cron: '0 * * * *' # runs every hour, on the hour
+  push:
+    branches:
+      - main
+  # in a real app the below would be enabled
+  # disabled as this is just a test repo
+  # triggered by push to main branch only now
+
+  # schedule:
+  #   - cron: '0 * * * *' # runs every hour, on the hour
 
 jobs:
   ping_url:
